@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14 de Febrero</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Asegura que ocupe toda la pantalla */
+            background-color: #ffe6e6; /* Fondo rosita suave */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px; /* Un poco de espacio en móviles */
+            box-sizing: border-box;
+            overflow: hidden; /* Evita barras de desplazamiento si el botón crece mucho */
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #d32f2f;
+            font-size: 2rem;
+            margin: 20px 0;
+        }
+
+        /* Estilos para las imágenes/GIFs */
+        .gif-style {
+            width: 200px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap; /* Permite que se acomoden si el botón crece mucho */
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #yesBtn {
+            background-color: #FF69B4; /* Rosa fuerte */
+            color: white;
+            font-weight: bold;
+        }
+        
+        #yesBtn:hover {
+             background-color: #ff47a3; 
+             transform: scale(1.05);
+        }
+
+        #noBtn {
+            background-color: #ffbdc9; /* Rosa pálido */
+            color: #d32f2f;
+        }
+         #noBtn:hover {
+             background-color: #ffabbc; 
+        }
+
+        /* Estilo para el mensaje final */
+        .hidden {
+            display: none;
+        }
+        
+        #message {
+            color: #d32f2f;
+            font-size: 2.5rem;
+            font-weight: bold;
+            animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Efecto rebote */
+        }
+        
+        #message p {
+            margin-bottom: 20px;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="question-screen">
+            <img src="https://media1.tenor.com/m/_mPtgtpoH6oAAAAd/puffy-bear-puffy.gif" alt="Osito tímido preguntando" class="gif-style">
+            
+            <h1>¿Quieres ser mi San Valentín?</h1>
+            
+            <div class="buttons">
+                <button id="yesBtn" class="btn">Sí</button>
+                <button id="noBtn" class="btn">No</button>
+            </div>
+        </div>
+
+        <div id="message" class="hidden">
+            <p>¡Siii! ¡Sabía que aceptarías! ❤️</p>
+            <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Ositos besándose" class="gif-style" style="width: 250px;">
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionScreen = document.getElementById('question-screen');
+        const messageDiv = document.getElementById('message');
+
+        // Frases para intentar convencer cuando presionan "No"
+        const phrases = [
+            "No",
+            "¿Segura?",
+            "¿De verdad verdad?",
+            "¡Piénsalo otra vez!",
+            "Mira ese osito triste...",
+            "¡Por favor!",
+            "¡Di que sí!",
+            "¡No acepto un no!",
+            "¡Se me rompe el cora! 💔",
+            "¡ANDA YA DI QUE SÍ!"
+        ];
+
+        let fontSize = 1.2; // Tamaño inicial de la fuente del botón Sí
+        let paddingSize = 10; // Padding inicial
+        let clickCount = 0;
+
+        noBtn.addEventListener('click', () => {
+            clickCount++;
+            
+            // Hacer el botón "Sí" más grande
+            fontSize += 0.8; 
+            paddingSize += 5;
+            yesBtn.style.fontSize = `${fontSize}rem`;
+            yesBtn.style.padding = `${paddingSize}px ${paddingSize * 2.5}px`;
+            
+            // Cambiar el texto del botón "No"
+            let phraseIndex = clickCount % phrases.length;
+            noBtn.innerText = phrases[phraseIndex];
+            
+            // Mover ligeramente el botón "No" para que sea más difícil darle
+             const randomX = Math.random() * 50 - 25; 
+             const randomY = Math.random() * 50 - 25;
+             noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        });
+
+        yesBtn.addEventListener('click', () => {
+            questionScreen.style.display = 'none'; // Oculta la pregunta y el primer GIF
+            messageDiv.classList.remove('hidden'); // Muestra el mensaje final y el segundo GIF
+            
+            // Cambio de fondo a uno más festivo
+            document.body.style.backgroundColor = "#ffdde1";
+        });
+    </script>
+</body>
+</html>
